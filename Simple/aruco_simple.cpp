@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
         cv::Mat InImage;
         // try opening first as video
         //VideoCapture vreader(argv[1]);
-		VideoCapture vreader(1);
+		VideoCapture vreader(0);
 
 		while(true)
 		{

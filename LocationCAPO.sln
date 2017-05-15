@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
+# Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArucoLib", "ArucoLib\ArucoLib.vcxproj", "{A3F6A927-EC09-4DE9-BDFC-64DCC4E39ABE}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Create_Marker", "Create_Marker\Create_Marker.vcxproj", "{E8D4C5CD-BD23-4C8C-9CE9-BB760B571378}"
@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Create_Marker", "Create_Mar
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple", "Simple\Simple.vcxproj", "{90DE3FCB-0CD1-47DE-9394-79DB56FEA816}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CalibrationOpenCV", "CalibrationOpenCV\CalibrationOpenCV.vcxproj", "{6AE66CE9-5FA6-4DAF-B676-ED72DA8B8C6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,6 +30,10 @@ Global
 		{90DE3FCB-0CD1-47DE-9394-79DB56FEA816}.Debug|Win32.Build.0 = Debug|Win32
 		{90DE3FCB-0CD1-47DE-9394-79DB56FEA816}.Release|Win32.ActiveCfg = Release|Win32
 		{90DE3FCB-0CD1-47DE-9394-79DB56FEA816}.Release|Win32.Build.0 = Release|Win32
+		{6AE66CE9-5FA6-4DAF-B676-ED72DA8B8C6A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6AE66CE9-5FA6-4DAF-B676-ED72DA8B8C6A}.Debug|Win32.Build.0 = Debug|Win32
+		{6AE66CE9-5FA6-4DAF-B676-ED72DA8B8C6A}.Release|Win32.ActiveCfg = Release|Win32
+		{6AE66CE9-5FA6-4DAF-B676-ED72DA8B8C6A}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
