@@ -123,7 +123,7 @@ int main(int argc, char **argv) {
 
         // Open video stream
         if (string(argv[1]) == "live")
-            TheVideoCapturer.open(0);
+            TheVideoCapturer.open(1);
         else
             TheVideoCapturer.open(argv[1]);
         if (!TheVideoCapturer.isOpened()) {
