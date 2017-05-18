@@ -18,12 +18,24 @@
     <ClInclude Include="ArucoLocation.pb.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UdpClientLinux.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ArucoLocation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArucoLocation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ArucoLocation.pb.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UdpClientLinux.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

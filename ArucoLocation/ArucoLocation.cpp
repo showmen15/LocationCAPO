@@ -1,26 +1,49 @@
-// ArucoLocation.cpp : Defines the entry point for the console application.
-//
 
-#include <iostream>
-#include "ArucoLocation.pb.h"
+#include "ArucoLocation.h"
 
 
-using namespace std;
-
-// protobuf
-//https://www.youtube.com/watch?v=x-u-hEFhDDo
-
-int main()
+ ArucoLocation:: ArucoLocation()
 {
-	Aruco::ArucoLocation testowy[10];
+	string sIP;
+	unsigned short port = 7777;
 
+	for(int i = 0; i < ROBOTS_COUNT;i++)
+	{
+		RobotLocation[i].set_robotid(i);
 
-
-	//testowy.set_alfa(45);
-
-	//cout << testowy.alfa();
-
-
-	return 0;
+		sIP = "192.168.2.20" + to_string(i);
+		
+		RobotClient[i] = new UdpClient(sIP.c_str(),port);
+	}
 }
 
+ ArucoLocation::~ ArucoLocation()
+{
+	//for(int i = 0; i < ROBOTS_COUNT;i++)
+	//{	
+	//	
+	//	RobotClient[i].~UdpClient();
+	//}
+}
+
+void ArucoLocation::Run()
+{
+	working = true;
+	int index = 0;
+
+	while(working)
+	{
+	
+	if(index == 3)
+		working = false;
+
+	index++;
+
+
+	}
+}
+
+void ArucoLocation::Stop()
+{
+	working = false;
+}

@@ -79,11 +79,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ArucoLocation.h" />
     <ClInclude Include="ArucoLocation.pb.h" />
+    <ClInclude Include="UdpClientLinux.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArucoLocation.cpp" />
     <ClCompile Include="ArucoLocation.pb.cc" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="UdpClientLinux.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
