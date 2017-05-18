@@ -38,9 +38,9 @@ char* UdpClient::Receive()
 	return buf;
 }
 
-void UdpClient::Send(const char* dgram)
+void UdpClient::Send(string dgram)
 { 
-	if (sendto(s, dgram, strlen(dgram) , 0 , (struct sockaddr *) &si_other, slen) == SOCKET_ERROR)
+	if (sendto(s, dgram.c_str(), dgram.length(), 0 , (struct sockaddr *) &si_other, slen) == SOCKET_ERROR)
 		err("sendto() failed with error code : %d" + WSAGetLastError());
 }
 

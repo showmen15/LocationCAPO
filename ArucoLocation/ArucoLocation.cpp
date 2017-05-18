@@ -30,10 +30,26 @@ void ArucoLocation::Run()
 {
 	working = true;
 	int index = 0;
+	string output;
 
 	while(working)
-	{
-	
+	{	
+		for(int i = 0; i < ROBOTS_COUNT;i++)
+		{
+			RobotLocation[i].set_alfa(423423);
+
+			RobotLocation[i].SerializePartialToString(&output);
+			RobotClient[i]->Send(output);
+
+			Aruco::ArucoLocation temp;
+
+			temp.ParseFromString(output);
+
+			
+		}
+
+
+
 	if(index == 3)
 		working = false;
 

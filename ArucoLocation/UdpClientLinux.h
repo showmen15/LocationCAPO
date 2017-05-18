@@ -1,9 +1,12 @@
 #ifndef UDPCLIENT_H_
 #define UDPCLIENT_H_
 
-#include<stdio.h>
-#include<winsock2.h>
- 
+#include <stdio.h>
+#include <string>
+#include <winsock2.h>
+
+using namespace std;
+
 #pragma comment(lib,"ws2_32.lib") //Winsock Library
 
 #define BUF_SIZE 1000
@@ -17,7 +20,7 @@ UdpClient(const char* sIP,unsigned short port);
 ~ UdpClient();
 
 char* Receive();
-void Send(const char* dgram);
+void Send(string dgram);
 
 
 private:
