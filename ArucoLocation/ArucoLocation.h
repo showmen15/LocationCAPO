@@ -3,10 +3,10 @@
 
 #include <iostream>
 #include "ArucoLocation.pb.h" // protobuf //https://www.youtube.com/watch?v=x-u-hEFhDDo
-#include "UdpClientLinux.h"
+#include "UdpClientLinux.h"  //http://www.binarytides.com/udp-socket-programming-in-winsock/
 
 
-#define ROBOTS_COUNT 9 
+#define ROBOTS_COUNT 4
 
 using namespace std;
 
