@@ -6,6 +6,9 @@
 #include "UdpClientLinux.h"  //http://www.binarytides.com/udp-socket-programming-in-winsock/
 
 
+#include <math.h>
+
+
 #define ROBOTS_COUNT 4
 
 using namespace std;

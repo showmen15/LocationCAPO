@@ -2,6 +2,7 @@
 
 int main()
 {
+
 	//ArucoLocation lok;
 	//lok.Run();
 
