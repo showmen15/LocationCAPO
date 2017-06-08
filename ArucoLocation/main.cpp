@@ -1,7 +1,30 @@
 #include "ArucoLocation.h"
 
 //http://docs.opencv.org/3.0-beta/modules/videoio/doc/reading_and_writing_video.html
+
+
+
+
+void bar(int x)
+{
+  // do stuff...
+}
+
 int main()
+{
+
+	//https://stackoverflow.com/questions/40544480/correct-way-to-pause-resume-an-stdthread
+	//Producent konsument
+
+  std::thread second (bar,0);  // spawn new thread that calls bar(0)
+
+  second
+
+	  
+
+}
+
+int main1()
 {
 	VideoCapture inputVideo(0); // open the default camera
 	
