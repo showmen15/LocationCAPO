@@ -1,52 +1,46 @@
 #include "VideoRecorder.h"
 
 
-VideoRecorder::VideoRecorder()
+VideoRecorder::VideoRecorder(int codecType,double fps,Size inputSize)
 {
+	 CodecType = codecType;
+	 Fps = fps;
+	 InputSize = inputSize;
 }
-
 
 VideoRecorder::~VideoRecorder()
 {
-}
-
-
-void VideoRecorder::StartRecord(string sFileName)
-{
-}
-
-
-void VideoRecorder::init()
-{
-	//outputVideo = new VideoWriter();
-
-	//outputVideo = new VideoWriter();
-	//
-	//// Open the output
- //   if (askOutputType)
- //       outputVideo.open(NAME, ex=-1, inputVideo.get(CV_CAP_PROP_FPS), S, true);
- //   else
- //       outputVideo.open(NAME, ex, inputVideo.get(CV_CAP_PROP_FPS), S, true);
-
- //   if (!outputVideo.isOpened())
- //   {
- //       cout  << "Could not open the output video for write: " << source << endl;
- //       return -1;
- //   }
+	if(outputVideo != NULL)
+		StopRecord();
 }
 
 void VideoRecorder::StartRecord(string sFileName)
 {
+	outputVideo = new VideoWriter();
+	outputVideo->open(sFileName.c_str(),CodecType,Fps,InputSize,true);
+
+	 if (!outputVideo->isOpened())
+    {
+		cout  << "Could not open the output video for write:" << sFileName  << endl;
+	 }
+	 else
+	 {
+		 cout  << "Open output stream" << sFileName  << endl;
+	 }
 }
 
 void VideoRecorder::Record(Mat frame)
 {
+	outputVideo->write(frame);
 }
 
-void VideoRecorder::EndRecord()
+void VideoRecorder::StopRecord()
 {
 	outputVideo->release();
 	delete outputVideo;
+	outputVideo = NULL;
+
+	cout << "Finished writing" << endl;
 }
 
 

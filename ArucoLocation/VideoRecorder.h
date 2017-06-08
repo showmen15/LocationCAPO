@@ -11,20 +11,24 @@ using namespace std;
 using namespace cv;
 
 
+//http://docs.opencv.org/2.4/doc/tutorials/highgui/video-write/video-write.html
+
 class VideoRecorder
 {
 private:
-	void init();
 	VideoWriter* outputVideo; 
-	string zmienna;
+
+	int CodecType;
+	double Fps;
+	Size InputSize;
 
 public:
-	VideoRecorder(void);
+	VideoRecorder(int codecType,double fps,Size inputSize);
 	~VideoRecorder(void);
 
 	void StartRecord(string sFileName);
 	void Record(Mat frame);
-	void EndRecord();
+	void StopRecord();
 };
 
 #endif /* VIDEORECORDER_H_ */

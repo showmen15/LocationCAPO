@@ -4,14 +4,19 @@
 #include <iostream>
 #include "ArucoLocation.pb.h" // protobuf //https://www.youtube.com/watch?v=x-u-hEFhDDo
 #include "UdpClientLinux.h"  //http://www.binarytides.com/udp-socket-programming-in-winsock/
+#include "VideoRecorder.h"
 
 
 #include <math.h>
 
+#include "opencv2/opencv.hpp"
 
-#define ROBOTS_COUNT 4
+
+
+#define ROBOTS_COUNT 10
 
 using namespace std;
+using namespace cv;
 
 class  ArucoLocation
 {
