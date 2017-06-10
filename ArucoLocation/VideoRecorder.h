@@ -23,13 +23,18 @@ private:
 	double Fps;
 	Size InputSize;
 
+	bool recording;
+
+	void StartRecord(string sFileName);
 public:
 	VideoRecorder(int codecType,double fps,Size inputSize);
 	~VideoRecorder(void);
 
-	void StartRecord(string sFileName);
+	void StartRecord();
+	
 	void Record(Mat frame);
 	void StopRecord();
+	bool IsRecord();
 };
 
 #endif /* VIDEORECORDER_H_ */

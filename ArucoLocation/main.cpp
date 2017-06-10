@@ -2,49 +2,12 @@
 
 //http://docs.opencv.org/3.0-beta/modules/videoio/doc/reading_and_writing_video.html
 
-//void bar(int x)
-//{
-//  // do stuff...
-//}
-//
-//int main()
-//{
-//
-//	//https://stackoverflow.com/questions/40544480/correct-way-to-pause-resume-an-stdthread
-//	//Producent konsument
-//
-//  std::thread second (bar,0);  // spawn new thread that calls bar(0)
-//
-//  //second
-//
-//	  
-//
-//}
-
-int main22()
-{
-	/*
-	
-	ArucoLocation* location = new ArucoLocation();
-	
-	for(int i = 0;; i++)
-	{
-
-		location->Update(i);
-
-		Sleep(1000);
-		cout << "Working main" << endl;
-	}
-
-	delete location;*/
-
-	return 0;
-}
-
 int main()
 {
+	bool working = true;
+	int key;
 	string sCameraParams =  "D:\\Desktop\\TestAruco\\test\\LocationCAPO\\Simple\\input\\out_camera_params.yml";
-	ArucoLocation* location = new ArucoLocation(sCameraParams); //okiekt lokalizacji
+	ArucoLocation location(sCameraParams); //okiekt lokalizacji
 
 	VideoCapture inputVideo(0); // open the default camera
 	
@@ -60,25 +23,50 @@ int main()
 	Mat frame;
     namedWindow("frame",1);
 
-	//rec.StartRecord("./Ale.avi");
-    for(;;)
+    for(;working;)
     {
         inputVideo >> frame; // get a new frame from camera
 
-		//rec.Record(frame);
-		location->Update(frame);
-		
-		//cout << "Main" << endl;
-			
+		rec.Record(frame);
+		location.Update(frame);	
 
         imshow("frame", frame);
-        if(waitKey(5) >= 0) 
+
+		key = waitKey(5);
+
+		if(key >= 0)
+		{
+		switch (key)
+		{
+		//S|s -> start recording
+		case 83:
+		case 115:
+			{
+			rec.StartRecord();
 			break;
+			}
+			
+		//E|e -> end recording
+		case 69:
+		case 101:
+			{
+				rec.StopRecord();
+			break;
+			}
+
+		
+		//Esc -> end progroam
+		case 27:
+			{
+			working = false;
+			break;
+			}
+
+		default:
+			break;
+		}
+		}
     }
-
-	//rec.StopRecord();
-	delete location;
-
     
     return 0;
 }

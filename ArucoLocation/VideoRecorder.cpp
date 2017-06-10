@@ -6,12 +6,24 @@ VideoRecorder::VideoRecorder(int codecType,double fps,Size inputSize)
 	 CodecType = codecType;
 	 Fps = fps;
 	 InputSize = inputSize;
+
+	 recording = false;
 }
 
 VideoRecorder::~VideoRecorder()
 {
 	if(outputVideo != NULL)
 		StopRecord();
+}
+
+void VideoRecorder::StartRecord()
+{ 
+	string sPath = "./Ale.avi"; //wygeneruj nazwe pliku w katalogu gdzie program jest
+
+	if(IsRecord())
+		StopRecord();
+
+	StartRecord(sPath);
 }
 
 void VideoRecorder::StartRecord(string sFileName)
@@ -26,22 +38,31 @@ void VideoRecorder::StartRecord(string sFileName)
 	 else
 	 {
 		 cout  << "Open output stream" << sFileName  << endl;
+		 recording = true;
 	 }
 }
 
 void VideoRecorder::Record(Mat frame)
 {
-	outputVideo->write(frame);
+	if(recording)
+		outputVideo->write(frame);
 }
 
 void VideoRecorder::StopRecord()
 {
+if(recording)
+{
+	recording = false;
 	outputVideo->release();
 	delete outputVideo;
 	outputVideo = NULL;
 
 	cout << "Finished writing" << endl;
 }
+}
 
-
+bool VideoRecorder::IsRecord()
+{
+	return recording;
+}
 
