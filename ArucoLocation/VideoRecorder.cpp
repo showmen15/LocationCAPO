@@ -20,7 +20,7 @@ void VideoRecorder::StartRecord(string sFileName)
 	outputVideo->open(sFileName.c_str(),CodecType,Fps,InputSize,true);
 
 	 if (!outputVideo->isOpened())
-    {
+     {
 		cout  << "Could not open the output video for write:" << sFileName  << endl;
 	 }
 	 else

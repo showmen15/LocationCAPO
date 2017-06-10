@@ -120,10 +120,6 @@ int main(int argc, char **argv) {
 
 
 int main1(int argc, char **argv) {
-    
-	
-	
-	
 	float x0 = 0;
 	float y0 = 0;
 
