@@ -46,31 +46,23 @@ private:
 
 	void run();
 	bool working;
-	
-
-	//mutex processingData;
-	//mutex waitingForData;
-
-	//int Input;
 
 	thread thr;
 
+condition_variable cv;
+mutex mtx;           // mutex for critical section
 
-//std::mutex m;
-std::condition_variable cv;
-//std::string data;
-//bool ready;
-//bool processed;
-
-
-std::mutex mtx;           // mutex for critical section
-
- aruco::CameraParameters CamParam;
+ CameraParameters CamParam;
   MarkerDetector MDetector;
   vector< Marker > Markers;
   float MarkerSize;
        
   Mat InImage; // read the input image
+
+  double get_x(Marker marker);
+  double get_y(Marker marker);
+  double get_alfa(Marker marker);
+
 public:
 	 ArucoLocation(string cameraParams);
 	~ ArucoLocation();

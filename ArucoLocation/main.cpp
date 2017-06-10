@@ -33,7 +33,6 @@ int main()
         imshow("frame", frame);
 
 		key = waitKey(5);
-
 		if(key >= 0)
 		{
 		switch (key)

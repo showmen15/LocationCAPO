@@ -41,6 +41,10 @@
 
  void ArucoLocation::run()
  { 
+	 Aruco::ArucoLocation currentLocation;
+	 UdpClient* curentRobotClient;
+
+	 string output;
 	 cv::namedWindow("in", 1);
 	 cv::namedWindow("thes", 1);
 	 
@@ -54,7 +58,17 @@
 
         for (unsigned int i = 0; i < Markers.size(); i++) // for each marker, draw info and its boundaries in the image
 		{
-            Markers[i].draw(InImage, Scalar(0, 0, 255), 2);	
+			currentLocation = RobotLocation[Markers[i].id];
+			curentRobotClient = RobotClient[Markers[i].id];
+
+			currentLocation.set_x(get_x(Markers[i]));
+			currentLocation.set_y(get_y(Markers[i]));
+			currentLocation.set_alfa(get_alfa(Markers[i]));
+		
+			currentLocation.SerializePartialToString(&output);
+			curentRobotClient->Send(output);
+
+			Markers[i].draw(InImage, Scalar(0, 0, 255), 2);	
         }
 
 		//cout << "Location Done" <<  Markers.size() << endl;
@@ -112,4 +126,19 @@
 void ArucoLocation::Stop()
 {
 	working = false;
+}
+
+double ArucoLocation::get_x(Marker marker)
+{
+	return 1.0;
+}
+
+double ArucoLocation::get_y(Marker marker)
+{
+	return 2.0;
+}
+
+double ArucoLocation::get_alfa(Marker marker)
+{
+	return 3.0;
 }
