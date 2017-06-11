@@ -85,6 +85,7 @@
   <ItemGroup>
     <ClInclude Include="ArucoLocation.h" />
     <ClInclude Include="ArucoLocation.pb.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="UdpClientLinux.h" />
     <ClInclude Include="VideoRecorder.h" />
   </ItemGroup>
@@ -99,6 +100,15 @@
     <ProjectReference Include="..\ArucoLib\ArucoLib.vcxproj">
       <Project>{a3f6a927-ec09-4de9-bdfc-64dcc4e39abe}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ArucoLocation.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="out_camera_params.yml">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+    </Resource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

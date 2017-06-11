@@ -6,7 +6,7 @@ int main()
 {
 	bool working = true;
 	int key;
-	string sCameraParams =  "D:\\Desktop\\TestAruco\\test\\LocationCAPO\\Simple\\input\\out_camera_params.yml";
+	string sCameraParams =  ".\\out_camera_params.yml";
 	ArucoLocation location(sCameraParams); //okiekt lokalizacji
 
 	VideoCapture inputVideo(0); // open the default camera

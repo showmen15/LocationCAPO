@@ -56,12 +56,19 @@ mutex mtx;           // mutex for critical section
   MarkerDetector MDetector;
   vector< Marker > Markers;
   float MarkerSize;
+  float MarkerSizeM;
        
   Mat InImage; // read the input image
 
-  double get_x(Marker marker);
-  double get_y(Marker marker);
-  double get_alfa(Marker marker);
+  //double get_x(Marker marker);
+  //double get_y(Marker marker);
+  //double get_alfa(Marker marker);
+
+  void set_location(Marker marker, Aruco::ArucoLocation location);
+  double  distance(double x0,double y0,double x1,double y1);
+
+  double Xp; //poczatek ukladu wspolzednych Xp
+  double Yp; //poczatek ukladu wspolzednych Yp
 
 public:
 	 ArucoLocation(string cameraParams);

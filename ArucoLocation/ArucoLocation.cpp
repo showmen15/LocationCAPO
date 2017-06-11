@@ -5,6 +5,7 @@
  ArucoLocation:: ArucoLocation(string cameraParams)
 {
 	 MarkerSize = 1000; //wielkosc markera
+	 MarkerSizeM = 0.26; //wielkosc markera w m
      CamParam.readFromXMLFile(cameraParams); // read camera parameters
            
 	string sIP;
@@ -22,6 +23,9 @@
 	 working = true;
 
 	 thr = thread(&ArucoLocation::run,this);
+
+	 Xp = 0;
+	 Yp = 0;
 }
 
  ArucoLocation::~ArucoLocation()
@@ -61,9 +65,7 @@
 			currentLocation = RobotLocation[Markers[i].id];
 			curentRobotClient = RobotClient[Markers[i].id];
 
-			currentLocation.set_x(get_x(Markers[i]));
-			currentLocation.set_y(get_y(Markers[i]));
-			currentLocation.set_alfa(get_alfa(Markers[i]));
+			set_location(Markers[i],currentLocation);
 		
 			currentLocation.SerializePartialToString(&output);
 			curentRobotClient->Send(output);
@@ -128,17 +130,52 @@ void ArucoLocation::Stop()
 	working = false;
 }
 
-double ArucoLocation::get_x(Marker marker)
+//double ArucoLocation::get_x(Marker marker)
+//{
+//	return 1.0;
+//}
+//
+//double ArucoLocation::get_y(Marker marker)
+//{
+//	return 2.0;
+//}
+//
+//double ArucoLocation::get_alfa(Marker marker)
+//{
+//	return 3.0;
+//}
+
+void ArucoLocation::set_location(Marker marker, Aruco::ArucoLocation location)
 {
-	return 1.0;
+	double x0 = marker[0].x;
+	double y0 = marker[0].y;
+
+	double x1 = marker[1].x;
+	double y1 = marker[1].y;
+	
+	double dist = distance(x0, y0, x1, y1);
+	
+	double Xl = marker.getCenter().x - Xp;
+	double Yl = marker.getCenter().y - Yp;
+
+	double Xlm = (MarkerSizeM * Xl) / dist;
+	double Ylm = (MarkerSizeM * Yl) / dist;
+
+	double Vxl = x1 - x0;
+	double Vyl = y1 - y0;
+
+	double Vl = sqrt(pow(Vxl,2) + pow(Vyl,2));
+	
+	double alfa = Vxl / Vl;
+
+	location.set_x(Xlm); //pozyajca w metrach
+	location.set_y(Ylm); //pozyajca w metrach
+	location.set_alfa(alfa); //kat w radianach
+
+	cout << alfa << endl;
 }
 
-double ArucoLocation::get_y(Marker marker)
+double  ArucoLocation::distance(double x0,double y0,double x1,double y1)
 {
-	return 2.0;
-}
-
-double ArucoLocation::get_alfa(Marker marker)
-{
-	return 3.0;
+	return sqrt( pow(x1 - x0, 2) + pow(y1 - y0,2));
 }
