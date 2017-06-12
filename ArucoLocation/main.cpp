@@ -17,7 +17,7 @@
 //    return buf;
 //}
 
-int main()
+int main22()
 {
 	//string ss = getTimeAndFormat();
 	//ss += "aaa";
@@ -67,7 +67,7 @@ int main()
 
 
 
-int main22()
+int main()
 {
 	bool working = true;
 	int key;
@@ -135,30 +135,30 @@ int main22()
 			}
 
 		//strzalka up
-		case 11:
+		case 2490368:
 			{
 				location.AddYp(-1);
 				break;
 			}
 
 		//strzalka down
-		case 12:
+		case 2621440:
 			{
 				location.AddYp(1);
 				break;
 			}
 
          //strzalka left
-		case 13:
+		case 2424832:
 			{
 				location.AddXp(-1);
 				break;
 			}
 		
 		//strzalka right
-		case 14:
+		case 2555904:
 			{
-				location.AddYp(1);
+				location.AddXp(1);
 				break;
 			}
 

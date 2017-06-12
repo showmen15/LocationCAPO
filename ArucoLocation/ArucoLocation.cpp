@@ -65,7 +65,7 @@
 			currentLocation = RobotLocation[Markers[i].id];
 			curentRobotClient = RobotClient[Markers[i].id];
 
-			set_location(Markers[i],currentLocation);
+			set_location(Markers[i],&currentLocation);
 		
 			currentLocation.SerializePartialToString(&output);
 			curentRobotClient->Send(output);
@@ -146,7 +146,7 @@ void ArucoLocation::Stop()
 //	return 3.0;
 //}
 
-void ArucoLocation::set_location(Marker marker, Aruco::ArucoLocation location)
+void ArucoLocation::set_location(Marker marker, Aruco::ArucoLocation* location)
 {
 	double x0 = marker[0].x;
 	double y0 = marker[0].y;
@@ -169,9 +169,9 @@ void ArucoLocation::set_location(Marker marker, Aruco::ArucoLocation location)
 	
 	double alfa = Vxl / Vl;
 
-	location.set_x(Xlm); //pozyajca w metrach
-	location.set_y(Ylm); //pozyajca w metrach
-	location.set_alfa(alfa); //kat w radianach
+	location->set_x(Xlm); //pozyajca w metrach
+	location->set_y(Ylm); //pozyajca w metrach
+	location->set_alfa(alfa); //kat w radianach
 
 	cout << alfa << endl;
 }

@@ -71,7 +71,7 @@ mutex mtx;           // mutex for critical section
   //double get_y(Marker marker);
   //double get_alfa(Marker marker);
 
-  void set_location(Marker marker, Aruco::ArucoLocation location);
+  void set_location(Marker marker, Aruco::ArucoLocation* location);
   double  distance(double x0,double y0,double x1,double y1);
 
   double Xp; //poczatek ukladu wspolzednych Xp

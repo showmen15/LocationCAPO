@@ -235,8 +235,8 @@ void Marker::draw(Mat &in, Scalar color, int lineWidth, bool writeId) const {
             cent.x += (*this)[i].x;
             cent.y += (*this)[i].y;
         }
-        cent.x /= 4.;
-        cent.y /= 4.;
+        cent.x /= 3.;
+        cent.y /= 3.;
         putText(in, cad, cent, FONT_HERSHEY_SIMPLEX, 0.5, Scalar(255 - color[0], 255 - color[1], 255 - color[2], 255), 2);
     }
 }

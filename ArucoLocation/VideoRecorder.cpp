@@ -18,7 +18,7 @@ VideoRecorder::~VideoRecorder()
 
 void VideoRecorder::StartRecord()
 { 
-	string sPath = ".\\Output\\" + getTimeAndFormat() + ".mp4"; //wygeneruj nazwe pliku w katalogu gdzie program jest
+	string sPath = "./Output/test.mp4"; //+ getTimeAndFormat() + ".mp4"; //wygeneruj nazwe pliku w katalogu gdzie program jest
 
 	if(IsRecord())
 		StopRecord();
