@@ -34,6 +34,8 @@ namespace aruco {
  */
 class ARUCO_EXPORTS CvDrawingUtils {
   public:
+	static void draw2dAxis(cv::Mat &Image, float Xp, float Yp);
+
     static void draw3dAxis(cv::Mat &Image, Marker &m, const CameraParameters &CP);
 
     static void draw3dCube(cv::Mat &Image, Marker &m, const CameraParameters &CP, bool setYperpendicular = false);

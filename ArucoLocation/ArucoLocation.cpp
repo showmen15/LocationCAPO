@@ -71,9 +71,10 @@
 			curentRobotClient->Send(output);
 
 			Markers[i].draw(InImage, Scalar(0, 0, 255), 2);	
+			Markers[i].directionVector(InImage,currentLocation.alfa());
         }
 
-		//cout << "Location Done" <<  Markers.size() << endl;
+		CvDrawingUtils::draw2dAxis(InImage,Xp,Yp); //narysuj osie Ox Oy
 
 		cv::imshow("in", InImage); // show input with augmented information       
         cv::imshow("thes", MDetector.getThresholdedImage());  // show also the internal image resulting from the threshold operation	  
@@ -175,7 +176,24 @@ void ArucoLocation::set_location(Marker marker, Aruco::ArucoLocation location)
 	cout << alfa << endl;
 }
 
-double  ArucoLocation::distance(double x0,double y0,double x1,double y1)
+double ArucoLocation::distance(double x0,double y0,double x1,double y1)
 {
 	return sqrt( pow(x1 - x0, 2) + pow(y1 - y0,2));
+}
+
+void ArucoLocation::AddXp(double in)
+{
+	if((Xp + in) >= 0)
+		Xp += in;
+}
+
+void ArucoLocation::AddYp(double in)
+{
+	if((Yp + in) >= 0)
+		Yp += in;
+}
+
+void ArucoLocation::GetXpYp()
+{
+	cout << "Xp: " << Xp << " Yp: " << Yp << endl;
 }

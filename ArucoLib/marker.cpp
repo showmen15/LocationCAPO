@@ -222,6 +222,10 @@ void Marker::draw(Mat &in, Scalar color, int lineWidth, bool writeId) const {
     cv::rectangle(in, (*this)[0] - Point2f(2, 2), (*this)[0] + Point2f(2, 2), Scalar(0, 0, 255, 255), lineWidth, CV_AA);
     cv::rectangle(in, (*this)[1] - Point2f(2, 2), (*this)[1] + Point2f(2, 2), Scalar(0, 255, 0, 255), lineWidth, CV_AA);
     cv::rectangle(in, (*this)[2] - Point2f(2, 2), (*this)[2] + Point2f(2, 2), Scalar(255, 0, 0, 255), lineWidth, CV_AA);
+
+	//Center point
+	cv::rectangle(in, (*this).getCenter() - Point2f(2, 2), (*this).getCenter() + Point2f(2, 2), Scalar(255, 0, 0, 255), lineWidth, CV_AA);
+
     if (writeId) {
         char cad[100];
         sprintf(cad, "id=%d", id);
@@ -235,6 +239,19 @@ void Marker::draw(Mat &in, Scalar color, int lineWidth, bool writeId) const {
         cent.y /= 4.;
         putText(in, cad, cent, FONT_HERSHEY_SIMPLEX, 0.5, Scalar(255 - color[0], 255 - color[1], 255 - color[2], 255), 2);
     }
+}
+
+
+void Marker::directionVector(Mat &in, double alfa) const {
+	int lineWidth = 2;
+	float arrowLength = 10.0;
+	Point2f arrowEnd;
+
+	arrowEnd.x = this->getCenter().x + (arrowLength * cos(alfa));
+	arrowEnd.y = this->getCenter().y + (arrowLength * sin(alfa));
+
+	//narysuj vector kirunku
+	cv::line(in, this->getCenter(), arrowEnd, Scalar(0, 255, 0, 255), lineWidth, CV_AA);
 }
 
 /**

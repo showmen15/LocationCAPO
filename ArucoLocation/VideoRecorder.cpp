@@ -18,7 +18,7 @@ VideoRecorder::~VideoRecorder()
 
 void VideoRecorder::StartRecord()
 { 
-	string sPath = "./Ale.avi"; //wygeneruj nazwe pliku w katalogu gdzie program jest
+	string sPath = ".\\Output\\" + getTimeAndFormat() + ".mp4"; //wygeneruj nazwe pliku w katalogu gdzie program jest
 
 	if(IsRecord())
 		StopRecord();
@@ -66,3 +66,16 @@ bool VideoRecorder::IsRecord()
 	return recording;
 }
 
+string VideoRecorder::getTimeAndFormat()
+{
+	// Visit http://en.cppreference.com/w/cpp/chrono/c/strftime
+
+	time_t     now = time(0);
+    struct tm  tstruct;
+    char       buf[80];
+    tstruct = *localtime(&now);
+  
+    strftime(buf, sizeof(buf), "Robot_%Y_%m_%d_%X", &tstruct);
+
+    return buf;
+}

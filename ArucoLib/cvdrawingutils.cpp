@@ -65,6 +65,19 @@ void CvDrawingUtils::draw3dAxis(cv::Mat &Image, Marker &m, const CameraParameter
     putText(Image, "z", imagePoints[3], FONT_HERSHEY_SIMPLEX, 0.6, Scalar(255, 0, 0, 255), 2);
 }
 
+void CvDrawingUtils::draw2dAxis(cv::Mat &Image, float Xp, float Yp) {
+	int lineWidth = 2; 
+	Point2f axis(Xp,Yp); //pocztek ukladu
+	Point2f axisX(50,Yp); //os X;
+	Point2f axisY(Xp,50); //os Y;
+
+	//narysowanie osi OX
+	cv::line(Image, axis, axisX, Scalar(0, 255, 0, 255), lineWidth, CV_AA);
+
+	//narysowanie osi OY
+	cv::line(Image, axis, axisY, Scalar(0, 0, 255, 255), lineWidth, CV_AA);
+}
+
 /****
  *
  *

@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <string>
+#include <time.h>
+#include <iostream>
+#include <stdio.h>
 
 #include <opencv2/core/core.hpp>        // Basic OpenCV structures (cv::Mat)
 #include <opencv2/highgui/highgui.hpp>  // Video write
@@ -26,6 +29,8 @@ private:
 	bool recording;
 
 	void StartRecord(string sFileName);
+	string getTimeAndFormat();
+
 public:
 	VideoRecorder(int codecType,double fps,Size inputSize);
 	~VideoRecorder(void);

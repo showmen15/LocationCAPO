@@ -27,7 +27,14 @@
 #include "opencv2/opencv.hpp"
 #include "opencv2/video.hpp"
 
+#include <sstream>
+#include <string>
+
 #include <math.h>
+#include <time.h>
+#include <iostream>
+#include <string>
+#include <stdio.h>
 
 
 
@@ -70,12 +77,18 @@ mutex mtx;           // mutex for critical section
   double Xp; //poczatek ukladu wspolzednych Xp
   double Yp; //poczatek ukladu wspolzednych Yp
 
+  
 public:
 	 ArucoLocation(string cameraParams);
-	~ ArucoLocation();
+	~ArucoLocation();
 	void Run();
 	void Stop();
-	 void Update(Mat frame);
+	void Update(Mat frame);
+
+	void AddXp(double in);
+	void AddYp(double in);
+
+	void GetXpYp();
 };
 
 
