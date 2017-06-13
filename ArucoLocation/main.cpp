@@ -91,18 +91,31 @@ int main22(int argc, char **argv)
 }
 
 
+bool isParam(string line)
+{
+    char* p;
+    strtol(line.c_str(), &p, 10);
+    return *p == 0;
+}
+
 int main(int argc, char **argv)
 {
 	try
 	{
-		string ss = "C:\\test\\single\\video.avi";
+		string programStartUp = argv[0];
+		string source = argv[1];
+
+		VideoCapture inputVideo;
 
 		bool working = true;
 		int key;
 		string sCameraParams =  ".\\out_camera_params.yml";
 		ArucoLocation location(sCameraParams); //okiekt lokalizacji
 
-		VideoCapture inputVideo(ss); // open the default camera
+		if(isParam(source))
+			inputVideo = VideoCapture(stoi(source.c_str())); // open the default camera
+		else
+			inputVideo = VideoCapture(source); // open file
 
 		if(!inputVideo.isOpened())  // check if we succeeded    
 			return -1;
@@ -111,7 +124,7 @@ int main(int argc, char **argv)
 		double Fps = 17.0; //25.0
 		Size InputSize = Size((int) inputVideo.get(CV_CAP_PROP_FRAME_WIDTH), (int) inputVideo.get(CV_CAP_PROP_FRAME_HEIGHT)); // Acquire input size
 
-		VideoRecorder rec(CodecType,Fps,InputSize,argv[0]);
+		VideoRecorder rec(CodecType,Fps,InputSize,programStartUp);
 
 		Mat frame;
 		namedWindow("frame",1);
@@ -120,10 +133,7 @@ int main(int argc, char **argv)
 
 		for(;working;)
 		{
-			zaczytane--;
-
-			if(zaczytane > 0)
-				inputVideo >> frame; // get a new frame from camera
+			inputVideo >> frame; // get a new frame from camera
 
 			rec.Record(frame);
 			location.Update(frame);	
