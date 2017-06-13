@@ -9,13 +9,13 @@ ArucoLocation:: ArucoLocation(string cameraParams)
 	CamParam.readFromXMLFile(cameraParams); // read camera parameters
 
 	string sIP;
-	unsigned short port = 7777;
+	unsigned short port = 53000;
 
 	for(int i = 0; i < ROBOTS_COUNT;i++)
 	{
 		RobotLocation[i].set_robotid(i);
 
-		sIP = "192.168.2.20" + to_string(i);
+		sIP = "192.168.2.100"; //"192.168.2.20" + to_string(i);
 
 		RobotClient[i] = new UdpClient(sIP.c_str(),port);
 	}
@@ -55,8 +55,6 @@ void ArucoLocation::run()
 
 			for (unsigned int i = 0; i < Markers.size(); i++) // for each marker, draw info and its boundaries in the image
 			{
-				Markers[i].id = 0;
-
 				currentLocation = RobotLocation[Markers[i].id];
 				curentRobotClient = RobotClient[Markers[i].id];
 
@@ -153,11 +151,13 @@ void ArucoLocation::set_location(Marker marker, Aruco::ArucoLocation* location)
 
 	double alfa = Vxl / Vl;
 
+	location->set_robotid(marker.id); //robotID
 	location->set_x(Xlm); //pozyajca w metrach
 	location->set_y(Ylm); //pozyajca w metrach
 	location->set_alfa(alfa); //kat w radianach
+	location->set_timestamp(999); //timestamp
 
-	cout << alfa << endl;
+	cout << "ID: " << marker.id << " X: "  << Xlm << " Y: " << Ylm << " alfa: " << alfa << endl;
 }
 
 double ArucoLocation::distance(double x0,double y0,double x1,double y1)
