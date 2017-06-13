@@ -15,7 +15,7 @@ UdpClient::UdpClient(const char* sIP,unsigned short portNo)
 
 	if ((s=socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == SOCKET_ERROR) //create socket
 		err("socket() failed with error code : %d" + WSAGetLastError());
-	
+
 	memset((char *) &si_other, 0, sizeof(si_other)); //setup address structure
 	si_other.sin_family = AF_INET;
 	si_other.sin_port = htons(portNo);

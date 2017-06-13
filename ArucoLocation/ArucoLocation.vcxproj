@@ -88,7 +88,6 @@
   <ItemGroup>
     <ClInclude Include="ArucoLocation.h" />
     <ClInclude Include="ArucoLocation.pb.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="UdpClientLinux.h" />
     <ClInclude Include="VideoRecorder.h" />
   </ItemGroup>

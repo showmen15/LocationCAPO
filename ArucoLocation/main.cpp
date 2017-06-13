@@ -1,5 +1,8 @@
 #include "ArucoLocation.h"
 
+//formatowanie kodu
+// CTRL+K CTRL+F 
+
 //http://docs.opencv.org/3.0-beta/modules/videoio/doc/reading_and_writing_video.html
 
 
@@ -22,36 +25,36 @@ int main22()
 	//string ss = getTimeAndFormat();
 	//ss += "aaa";
 
-	   // current date/time based on current system
-   //time_t now = time(0);
-   //
-   //// convert now to string form
-   //char* dt = ctime(&now);
+	// current date/time based on current system
+	//time_t now = time(0);
+	//
+	//// convert now to string form
+	//char* dt = ctime(&now);
 
-   //cout << "The local date and time is: " << dt << endl;
+	//cout << "The local date and time is: " << dt << endl;
 
-   //// convert now to tm struct for UTC
-   //tm *gmtm = gmtime(&now);
-   //dt = asctime(gmtm);
-   //cout << "The UTC date and time is:"<< dt << endl;
+	//// convert now to tm struct for UTC
+	//tm *gmtm = gmtime(&now);
+	//dt = asctime(gmtm);
+	//cout << "The UTC date and time is:"<< dt << endl;
 
 
-	 // current date/time based on current system
-   //time_t now = time(0);
+	// current date/time based on current system
+	//time_t now = time(0);
 
-   //cout << "Number of sec since January 1,1970:" << now << endl;
+	//cout << "Number of sec since January 1,1970:" << now << endl;
 
-   //tm *ltm = localtime(&now);
+	//tm *ltm = localtime(&now);
 
-   //// print various components of tm structure.
-   //cout << "Year" << 1900 + ltm->tm_year<<endl;
-   //cout << "Month: "<< 1 + ltm->tm_mon<< endl;
-   //cout << "Day: "<<  ltm->tm_mday << endl;
-   //cout << "Time: "<< 1 + ltm->tm_hour << ":";
-   //cout << 1 + ltm->tm_min << ":";
-   //cout << 1 + ltm->tm_sec << endl;
-	
-	
+	//// print various components of tm structure.
+	//cout << "Year" << 1900 + ltm->tm_year<<endl;
+	//cout << "Month: "<< 1 + ltm->tm_mon<< endl;
+	//cout << "Day: "<<  ltm->tm_mday << endl;
+	//cout << "Time: "<< 1 + ltm->tm_hour << ":";
+	//cout << 1 + ltm->tm_min << ":";
+	//cout << 1 + ltm->tm_sec << endl;
+
+
 	//while(true)
 	//{
 	//	int key = waitKey(5);
@@ -92,121 +95,121 @@ int main(int argc, char **argv)
 {
 	try
 	{
-	string ss = "C:\\test\\single\\video.avi";
+		string ss = "C:\\test\\single\\video.avi";
 
-	bool working = true;
-	int key;
-	string sCameraParams =  ".\\out_camera_params.yml";
-	ArucoLocation location(sCameraParams); //okiekt lokalizacji
+		bool working = true;
+		int key;
+		string sCameraParams =  ".\\out_camera_params.yml";
+		ArucoLocation location(sCameraParams); //okiekt lokalizacji
 
-	VideoCapture inputVideo(ss); // open the default camera
-	
-    if(!inputVideo.isOpened())  // check if we succeeded    
-		return -1;
+		VideoCapture inputVideo(ss); // open the default camera
 
-	int CodecType = CV_FOURCC('M', 'J', 'P', 'G'); //CV_FOURCC('H', '2', '6', '3'); // Get Codec Type- Int form
-	double Fps = 17.0; //25.0
-	Size InputSize = Size((int) inputVideo.get(CV_CAP_PROP_FRAME_WIDTH), (int) inputVideo.get(CV_CAP_PROP_FRAME_HEIGHT)); // Acquire input size
+		if(!inputVideo.isOpened())  // check if we succeeded    
+			return -1;
 
-	VideoRecorder rec(CodecType,Fps,InputSize,argv[0]);
+		int CodecType = CV_FOURCC('M', 'J', 'P', 'G'); //CV_FOURCC('H', '2', '6', '3'); // Get Codec Type- Int form
+		double Fps = 17.0; //25.0
+		Size InputSize = Size((int) inputVideo.get(CV_CAP_PROP_FRAME_WIDTH), (int) inputVideo.get(CV_CAP_PROP_FRAME_HEIGHT)); // Acquire input size
 
-	Mat frame;
-    namedWindow("frame",1);
+		VideoRecorder rec(CodecType,Fps,InputSize,argv[0]);
 
-	int zaczytane = 20;
+		Mat frame;
+		namedWindow("frame",1);
 
-    for(;working;)
-    {
-		zaczytane--;
+		int zaczytane = 20;
 
-		if(zaczytane > 0)
-		inputVideo >> frame; // get a new frame from camera
-
-		rec.Record(frame);
-		location.Update(frame);	
-
-        imshow("frame", frame);
-
-		key = waitKey(200);
-		if(key >= 0)
+		for(;working;)
 		{
-		switch (key)
-		{
-		//S|s -> start recording
-		case 83:
-		case 115:
-			{
-			rec.StartRecord();
-			break;
-			}
-			
-		//E|e -> end recording
-		case 69:
-		case 101:
-			{
-				rec.StopRecord();
-			break;
-			}
+			zaczytane--;
 
-		
-		//Esc -> end progroam
-		case 27:
-			{
-			working = false;
-			rec.StopRecord();
-			location.Stop();
-			break;
-			}
+			if(zaczytane > 0)
+				inputVideo >> frame; // get a new frame from camera
 
-		// P|p  -> print Xp, Yp
-		case 80:
-		case 112:
-			{
-				location.GetXpYp();
-				break;
-			}
+			rec.Record(frame);
+			location.Update(frame);	
 
-		//strzalka up
-		case 2490368:
-			{
-				location.AddYp(-1);
-				break;
-			}
+			imshow("frame", frame);
 
-		//strzalka down
-		case 2621440:
+			key = waitKey(200);
+			if(key >= 0)
 			{
-				location.AddYp(1);
-				break;
-			}
+				switch (key)
+				{
+					//S|s -> start recording
+				case 83:
+				case 115:
+					{
+						rec.StartRecord();
+						break;
+					}
 
-         //strzalka left
-		case 2424832:
-			{
-				location.AddXp(-1);
-				break;
-			}
-		
-		//strzalka right
-		case 2555904:
-			{
-				location.AddXp(1);
-				break;
-			}
+					//E|e -> end recording
+				case 69:
+				case 101:
+					{
+						rec.StopRecord();
+						break;
+					}
 
-		default:
-			break;
+
+					//Esc -> end progroam
+				case 27:
+					{
+						working = false;
+						rec.StopRecord();
+						location.Stop();
+						break;
+					}
+
+					// P|p  -> print Xp, Yp
+				case 80:
+				case 112:
+					{
+						location.GetXpYp();
+						break;
+					}
+
+					//strzalka up
+				case 2490368:
+					{
+						location.AddYp(-1);
+						break;
+					}
+
+					//strzalka down
+				case 2621440:
+					{
+						location.AddYp(1);
+						break;
+					}
+
+					//strzalka left
+				case 2424832:
+					{
+						location.AddXp(-1);
+						break;
+					}
+
+					//strzalka right
+				case 2555904:
+					{
+						location.AddXp(1);
+						break;
+					}
+
+				default:
+					break;
+				}
+			}
 		}
-		}
-    }
 	}
 	catch(Exception ex)
 	{
 		cout << ex.what();
 	}
 
-    
-    return 0;
+
+	return 0;
 }
 
- 
+

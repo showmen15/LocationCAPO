@@ -56,30 +56,30 @@ private:
 
 	thread thr;
 
-condition_variable cv;
-mutex mtx;           // mutex for critical section
+	condition_variable cv;
+	mutex mtx;           // mutex for critical section
 
- CameraParameters CamParam;
-  MarkerDetector MDetector;
-  vector< Marker > Markers;
-  float MarkerSize;
-  float MarkerSizeM;
-       
-  Mat InImage; // read the input image
+	CameraParameters CamParam;
+	MarkerDetector MDetector;
+	vector< Marker > Markers;
+	float MarkerSize;
+	float MarkerSizeM;
 
-  //double get_x(Marker marker);
-  //double get_y(Marker marker);
-  //double get_alfa(Marker marker);
+	Mat InImage; // read the input image
 
-  void set_location(Marker marker, Aruco::ArucoLocation* location);
-  double  distance(double x0,double y0,double x1,double y1);
+	//double get_x(Marker marker);
+	//double get_y(Marker marker);
+	//double get_alfa(Marker marker);
 
-  double Xp; //poczatek ukladu wspolzednych Xp
-  double Yp; //poczatek ukladu wspolzednych Yp
+	void set_location(Marker marker, Aruco::ArucoLocation* location);
+	double  distance(double x0,double y0,double x1,double y1);
 
-  
+	double Xp; //poczatek ukladu wspolzednych Xp
+	double Yp; //poczatek ukladu wspolzednych Yp
+
+
 public:
-	 ArucoLocation(string cameraParams);
+	ArucoLocation(string cameraParams);
 	~ArucoLocation();
 	void Run();
 	void Stop();

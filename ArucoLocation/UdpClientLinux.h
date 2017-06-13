@@ -16,20 +16,20 @@ using namespace std;
 class UdpClient
 {
 public:
-UdpClient(const char* sIP,unsigned short port);
-~ UdpClient();
+	UdpClient(const char* sIP,unsigned short port);
+	~ UdpClient();
 
-char* Receive();
-void Send(string dgram);
+	char* Receive();
+	void Send(string dgram);
 
 
 private:
 	struct sockaddr_in si_other;
-    int s;
+	int s;
 	int slen;
-    char buf[BUF_SIZE];
-    char message[BUF_SIZE];
-    WSADATA wsa;
+	char buf[BUF_SIZE];
+	char message[BUF_SIZE];
+	WSADATA wsa;
 
 	void err(const char *str);
 	void info(const char *str);

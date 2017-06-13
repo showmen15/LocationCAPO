@@ -44,7 +44,7 @@ public:
 	~VideoRecorder(void);
 
 	void StartRecord();
-	
+
 	void Record(Mat frame);
 	void StopRecord();
 	bool IsRecord();

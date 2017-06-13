@@ -2,12 +2,12 @@
 #include "ArucoLocation.h"
 
 
- ArucoLocation:: ArucoLocation(string cameraParams)
+ArucoLocation:: ArucoLocation(string cameraParams)
 {
-	 MarkerSize = 1000; //wielkosc markera
-	 MarkerSizeM = 0.26; //wielkosc markera w m
-     CamParam.readFromXMLFile(cameraParams); // read camera parameters
-           
+	MarkerSize = 1000; //wielkosc markera
+	MarkerSizeM = 0.26; //wielkosc markera w m
+	CamParam.readFromXMLFile(cameraParams); // read camera parameters
+
 	string sIP;
 	unsigned short port = 7777;
 
@@ -16,78 +16,78 @@
 		RobotLocation[i].set_robotid(i);
 
 		sIP = "192.168.2.20" + to_string(i);
-		
+
 		RobotClient[i] = new UdpClient(sIP.c_str(),port);
 	}
 
-	 working = true;
+	working = true;
 
-	 thr = thread(&ArucoLocation::run,this);
+	thr = thread(&ArucoLocation::run,this);
 
-	 Xp = 0;
-	 Yp = 0;
+	Xp = 0;
+	Yp = 0;
 }
 
- ArucoLocation::~ArucoLocation()
+ArucoLocation::~ArucoLocation()
 {	
 
 }
 
- void ArucoLocation::run()
- { 
-	 Aruco::ArucoLocation currentLocation;
-	 UdpClient* curentRobotClient;
+void ArucoLocation::run()
+{ 
+	Aruco::ArucoLocation currentLocation;
+	UdpClient* curentRobotClient;
 
-	 string output;
-	 cv::namedWindow("in", 1);
-	 cv::namedWindow("thes", 1);
-	 
-	 while(working)
-	 {
+	string output;
+	cv::namedWindow("in", 1);
+	cv::namedWindow("thes", 1);
+
+	while(working)
+	{
 		std::unique_lock<std::mutex> lck(mtx);
 		cv.wait(lck);
 
 		if(working)
 		{
 
-		CamParam.resize(InImage.size());  // resizes the parameters to fit the size of the input image
-        MDetector.detect(InImage, Markers, CamParam, MarkerSize);  // Ok, let's detect
+			CamParam.resize(InImage.size());  // resizes the parameters to fit the size of the input image
+			MDetector.detect(InImage, Markers, CamParam, MarkerSize);  // Ok, let's detect
 
-        for (unsigned int i = 0; i < Markers.size(); i++) // for each marker, draw info and its boundaries in the image
-		{
-			Markers[i].id = 0;
+			for (unsigned int i = 0; i < Markers.size(); i++) // for each marker, draw info and its boundaries in the image
+			{
+				Markers[i].id = 0;
 
-			currentLocation = RobotLocation[Markers[i].id];
-			curentRobotClient = RobotClient[Markers[i].id];
+				currentLocation = RobotLocation[Markers[i].id];
+				curentRobotClient = RobotClient[Markers[i].id];
 
-			set_location(Markers[i],&currentLocation);
-		
-			currentLocation.SerializePartialToString(&output);
-			curentRobotClient->Send(output);
+				set_location(Markers[i],&currentLocation);
 
-			Markers[i].draw(InImage, Scalar(0, 0, 255), 2);	
-			Markers[i].directionVector(InImage,currentLocation.alfa());
-        }
+				currentLocation.SerializePartialToString(&output);
+				curentRobotClient->Send(output);
 
-		CvDrawingUtils::draw2dAxis(InImage,Xp,Yp); //narysuj osie Ox Oy
+				Markers[i].draw(InImage, Scalar(0, 0, 255), 2);	
+				Markers[i].directionVector(InImage,currentLocation.alfa());
+			}
 
-		cv::imshow("in", InImage); // show input with augmented information       
-        cv::imshow("thes", MDetector.getThresholdedImage());  // show also the internal image resulting from the threshold operation	  
-		cv::waitKey(1); // wait for key to be pressed
+			CvDrawingUtils::draw2dAxis(InImage,Xp,Yp); //narysuj osie Ox Oy
+
+			cv::imshow("in", InImage); // show input with augmented information       
+			cv::imshow("thes", MDetector.getThresholdedImage());  // show also the internal image resulting from the threshold operation	  
+			cv::waitKey(1); // wait for key to be pressed
 		}
-	 }
- }
+	}
+}
 
- void ArucoLocation::Update(Mat frame)
- {
-	 std::unique_lock<std::mutex> lck(mtx,std::defer_lock);
+void ArucoLocation::Update(Mat frame)
+{
+	std::unique_lock<std::mutex> lck(mtx,std::defer_lock);
 
-	 if(lck.try_lock())
-	 {		
-		 frame.copyTo(InImage);
-		 cv.notify_one();
-	 }
- }
+	if(lck.try_lock())
+	{		
+		frame.copyTo(InImage);
+		cv.notify_one();
+	}
+}
 
 //void ArucoLocation::Run()
 //{
@@ -137,9 +137,9 @@ void ArucoLocation::set_location(Marker marker, Aruco::ArucoLocation* location)
 
 	double x1 = marker[1].x;
 	double y1 = marker[1].y;
-	
+
 	double dist = distance(x0, y0, x1, y1);
-	
+
 	double Xl = marker.getCenter().x - Xp;
 	double Yl = marker.getCenter().y - Yp;
 
@@ -150,7 +150,7 @@ void ArucoLocation::set_location(Marker marker, Aruco::ArucoLocation* location)
 	double Vyl = y1 - y0;
 
 	double Vl = sqrt(pow(Vxl,2) + pow(Vyl,2));
-	
+
 	double alfa = Vxl / Vl;
 
 	location->set_x(Xlm); //pozyajca w metrach
