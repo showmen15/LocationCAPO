@@ -30,17 +30,7 @@
 
  ArucoLocation::~ArucoLocation()
 {	
-	working = false;
-	mtx.unlock();
-	cv.notify_one();
-	thr.~thread();
 
-
-	/*for(int i = 0; i < ROBOTS_COUNT;i++)
-	{	
-		
-		RobotClient[i].~UdpClient();
-	}*/
 }
 
  void ArucoLocation::run()
@@ -57,11 +47,16 @@
 		std::unique_lock<std::mutex> lck(mtx);
 		cv.wait(lck);
 
+		if(working)
+		{
+
 		CamParam.resize(InImage.size());  // resizes the parameters to fit the size of the input image
         MDetector.detect(InImage, Markers, CamParam, MarkerSize);  // Ok, let's detect
 
         for (unsigned int i = 0; i < Markers.size(); i++) // for each marker, draw info and its boundaries in the image
 		{
+			Markers[i].id = 0;
+
 			currentLocation = RobotLocation[Markers[i].id];
 			curentRobotClient = RobotClient[Markers[i].id];
 
@@ -79,6 +74,7 @@
 		cv::imshow("in", InImage); // show input with augmented information       
         cv::imshow("thes", MDetector.getThresholdedImage());  // show also the internal image resulting from the threshold operation	  
 		cv::waitKey(1); // wait for key to be pressed
+		}
 	 }
  }
 
@@ -129,22 +125,10 @@
 void ArucoLocation::Stop()
 {
 	working = false;
+	std::unique_lock<std::mutex> lck(mtx,std::defer_lock);
+	cv.notify_one();
+	thr.join();
 }
-
-//double ArucoLocation::get_x(Marker marker)
-//{
-//	return 1.0;
-//}
-//
-//double ArucoLocation::get_y(Marker marker)
-//{
-//	return 2.0;
-//}
-//
-//double ArucoLocation::get_alfa(Marker marker)
-//{
-//	return 3.0;
-//}
 
 void ArucoLocation::set_location(Marker marker, Aruco::ArucoLocation* location)
 {

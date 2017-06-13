@@ -6,6 +6,9 @@
 #include <time.h>
 #include <iostream>
 #include <stdio.h>
+#include <windows.h>
+#include <stdio.h>
+#include <direct.h>
 
 #include <opencv2/core/core.hpp>        // Basic OpenCV structures (cv::Mat)
 #include <opencv2/highgui/highgui.hpp>  // Video write
@@ -31,8 +34,13 @@ private:
 	void StartRecord(string sFileName);
 	string getTimeAndFormat();
 
+	string getDirectory (const string& path);
+	bool  directoryExists(const std::string& dirName_in);
+
+	string sOutputDir;
+
 public:
-	VideoRecorder(int codecType,double fps,Size inputSize);
+	VideoRecorder(int codecType,double fps,Size inputSize,string programStartUp);
 	~VideoRecorder(void);
 
 	void StartRecord();

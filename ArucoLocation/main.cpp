@@ -65,39 +65,69 @@ int main22()
 	return 0;
 }
 
+bool temp;
 
-
-int main()
+void run()
 {
+	while(temp)
+	{
+
+		Sleep(1000);
+	}
+}
+
+
+int main22(int argc, char **argv)
+{
+	temp = true;
+	thread thr = thread(run);
+	temp = false;
+
+	thr.join();
+	return 0;
+}
+
+
+int main(int argc, char **argv)
+{
+	try
+	{
+	string ss = "C:\\test\\single\\video.avi";
+
 	bool working = true;
 	int key;
 	string sCameraParams =  ".\\out_camera_params.yml";
 	ArucoLocation location(sCameraParams); //okiekt lokalizacji
 
-	VideoCapture inputVideo(0); // open the default camera
+	VideoCapture inputVideo(ss); // open the default camera
 	
     if(!inputVideo.isOpened())  // check if we succeeded    
 		return -1;
 
-	int CodecType =  CV_FOURCC('H', '2', '6', '4');  //CV_FOURCC('M', 'J', 'P', 'G');     // Get Codec Type- Int form
+	int CodecType = CV_FOURCC('M', 'J', 'P', 'G'); //CV_FOURCC('H', '2', '6', '3'); // Get Codec Type- Int form
 	double Fps = 17.0; //25.0
 	Size InputSize = Size((int) inputVideo.get(CV_CAP_PROP_FRAME_WIDTH), (int) inputVideo.get(CV_CAP_PROP_FRAME_HEIGHT)); // Acquire input size
 
-	VideoRecorder rec(CodecType,Fps,InputSize);
+	VideoRecorder rec(CodecType,Fps,InputSize,argv[0]);
 
 	Mat frame;
     namedWindow("frame",1);
 
+	int zaczytane = 20;
+
     for(;working;)
     {
-        inputVideo >> frame; // get a new frame from camera
+		zaczytane--;
+
+		if(zaczytane > 0)
+		inputVideo >> frame; // get a new frame from camera
 
 		rec.Record(frame);
 		location.Update(frame);	
 
         imshow("frame", frame);
 
-		key = waitKey(5);
+		key = waitKey(200);
 		if(key >= 0)
 		{
 		switch (key)
@@ -123,6 +153,8 @@ int main()
 		case 27:
 			{
 			working = false;
+			rec.StopRecord();
+			location.Stop();
 			break;
 			}
 
@@ -167,6 +199,12 @@ int main()
 		}
 		}
     }
+	}
+	catch(Exception ex)
+	{
+		cout << ex.what();
+	}
+
     
     return 0;
 }

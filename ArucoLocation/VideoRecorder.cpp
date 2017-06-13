@@ -1,9 +1,14 @@
 #include "VideoRecorder.h"
 
 
-VideoRecorder::VideoRecorder(int codecType,double fps,Size inputSize)
+VideoRecorder::VideoRecorder(int codecType,double fps,Size inputSize,string programStartUp)
 {
-	 CodecType = codecType;
+	sOutputDir = getDirectory(programStartUp) + "\\Output\\";
+
+	if(!directoryExists(sOutputDir))
+		mkdir(sOutputDir.c_str());
+		
+	CodecType = codecType;
 	 Fps = fps;
 	 InputSize = inputSize;
 
@@ -18,7 +23,7 @@ VideoRecorder::~VideoRecorder()
 
 void VideoRecorder::StartRecord()
 { 
-	string sPath = "./Output/test.mp4"; //+ getTimeAndFormat() + ".mp4"; //wygeneruj nazwe pliku w katalogu gdzie program jest
+	string sPath = sOutputDir + getTimeAndFormat() +  ".avi"; // "test1.avi"; //"C:\\git\\LocationCAPO\\ArucoLocation\\Debug\\test7.avi"; //".\\Output\\test.mp4"; //+ getTimeAndFormat() + ".mp4"; //wygeneruj nazwe pliku w katalogu gdzie program jest
 
 	if(IsRecord())
 		StopRecord();
@@ -75,7 +80,25 @@ string VideoRecorder::getTimeAndFormat()
     char       buf[80];
     tstruct = *localtime(&now);
   
-    strftime(buf, sizeof(buf), "Robot_%Y_%m_%d_%X", &tstruct);
+    strftime(buf, sizeof(buf), "Robot_%Y_%m_%d_%H_%M_%S", &tstruct);
 
     return buf;
+}
+
+string VideoRecorder::getDirectory(const string& path)
+{
+    size_t found = path.find_last_of("/\\");
+    return(path.substr(0, found));
+}
+
+bool  VideoRecorder::directoryExists(const std::string& dirName_in)
+{
+  DWORD ftyp = GetFileAttributesA(dirName_in.c_str());
+  if (ftyp == INVALID_FILE_ATTRIBUTES)
+    return false;  //something is wrong with your path!
+
+  if (ftyp & FILE_ATTRIBUTE_DIRECTORY)
+    return true;   // this is a directory!
+
+  return false;    // this is not a directory!
 }
