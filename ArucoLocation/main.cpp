@@ -107,11 +107,6 @@ int main(int argc, char **argv)
 
 		VideoCapture inputVideo;
 
-		bool working = true;
-		int key;
-		string sCameraParams =  ".\\out_camera_params.yml";
-		ArucoLocation location(sCameraParams); //okiekt lokalizacji
-
 		if(isParam(source))
 			inputVideo = VideoCapture(stoi(source.c_str())); // open the default camera
 		else
@@ -120,10 +115,15 @@ int main(int argc, char **argv)
 		if(!inputVideo.isOpened())  // check if we succeeded    
 			return -1;
 
+		bool working = true;
+		int key;
+		string sCameraParams =  ".\\out_camera_params.yml";
+
 		int CodecType = CV_FOURCC('M', 'J', 'P', 'G'); //CV_FOURCC('H', '2', '6', '3'); // Get Codec Type- Int form
 		double Fps = 17.0; //25.0
 		Size InputSize = Size((int) inputVideo.get(CV_CAP_PROP_FRAME_WIDTH), (int) inputVideo.get(CV_CAP_PROP_FRAME_HEIGHT)); // Acquire input size
 
+		ArucoLocation location(sCameraParams,InputSize); //okiekt lokalizacji
 		VideoRecorder rec(CodecType,Fps,InputSize,programStartUp);
 
 		Mat frame;

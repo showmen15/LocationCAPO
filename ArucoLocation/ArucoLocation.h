@@ -72,14 +72,16 @@ private:
 	//double get_alfa(Marker marker);
 
 	void set_location(Marker marker, Aruco::ArucoLocation* location);
+	void set_location2(Marker marker, Aruco::ArucoLocation* location);
 	double  distance(double x0,double y0,double x1,double y1);
 
-	double Xp; //poczatek ukladu wspolzednych Xp
-	double Yp; //poczatek ukladu wspolzednych Yp
+	int Xp; //poczatek ukladu wspolzednych Xp
+	int Yp; //poczatek ukladu wspolzednych Yp
+	Size InputImageSize;
 
 
 public:
-	ArucoLocation(string cameraParams);
+	ArucoLocation(string cameraParams,Size inputImageSize);
 	~ArucoLocation();
 	void Run();
 	void Stop();

@@ -2,11 +2,12 @@
 #include "ArucoLocation.h"
 
 
-ArucoLocation:: ArucoLocation(string cameraParams)
+ArucoLocation:: ArucoLocation(string cameraParams,Size inputImageSize)
 {
-	MarkerSize = 1000; //wielkosc markera
-	MarkerSizeM = 0.26; //wielkosc markera w m
+	MarkerSize = 1000; //wielkosc markera px
+	MarkerSizeM = 0.2645833333; //wielkosc markera w m
 	CamParam.readFromXMLFile(cameraParams); // read camera parameters
+	InputImageSize = inputImageSize;
 
 	string sIP;
 	unsigned short port = 53000;
@@ -25,7 +26,7 @@ ArucoLocation:: ArucoLocation(string cameraParams)
 	thr = thread(&ArucoLocation::run,this);
 
 	Xp = 0;
-	Yp = 0;
+	Yp = inputImageSize.height;
 }
 
 ArucoLocation::~ArucoLocation()
@@ -40,7 +41,7 @@ void ArucoLocation::run()
 
 	string output;
 	cv::namedWindow("in", 1);
-	cv::namedWindow("thes", 1);
+	//cv::namedWindow("thes", 1);
 
 	while(working)
 	{
@@ -49,7 +50,6 @@ void ArucoLocation::run()
 
 		if(working)
 		{
-
 			CamParam.resize(InImage.size());  // resizes the parameters to fit the size of the input image
 			MDetector.detect(InImage, Markers, CamParam, MarkerSize);  // Ok, let's detect
 
@@ -58,7 +58,7 @@ void ArucoLocation::run()
 				currentLocation = RobotLocation[Markers[i].id];
 				curentRobotClient = RobotClient[Markers[i].id];
 
-				set_location(Markers[i],&currentLocation);
+				set_location2(Markers[i],&currentLocation); //nowa wersja 
 
 				currentLocation.SerializePartialToString(&output);
 				curentRobotClient->Send(output);
@@ -70,7 +70,7 @@ void ArucoLocation::run()
 			CvDrawingUtils::draw2dAxis(InImage,Xp,Yp); //narysuj osie Ox Oy
 
 			cv::imshow("in", InImage); // show input with augmented information       
-			cv::imshow("thes", MDetector.getThresholdedImage());  // show also the internal image resulting from the threshold operation	  
+			//cv::imshow("thes", MDetector.getThresholdedImage());  // show also the internal image resulting from the threshold operation	  
 			cv::waitKey(1); // wait for key to be pressed
 		}
 	}
@@ -159,6 +159,40 @@ void ArucoLocation::set_location(Marker marker, Aruco::ArucoLocation* location)
 
 	cout << "ID: " << marker.id << " X: "  << Xlm << " Y: " << Ylm << " alfa: " << alfa << endl;
 }
+
+void ArucoLocation::set_location2(Marker marker, Aruco::ArucoLocation* location)
+{
+	double x0 = marker[0].x;
+	double y0 = marker[0].y;
+
+	double x1 = marker[1].x;
+	double y1 = marker[1].y;
+
+	double dist = distance(x0, y0, x1, y1);
+
+	double Xl = InputImageSize.height - marker.getCenter().y - (InputImageSize.height -Yp);
+	double Yl =  marker.getCenter().x - Xp;
+
+	double Xlm = (MarkerSizeM * Xl) / dist;
+	double Ylm = (MarkerSizeM * Yl) / dist;
+
+	double Vxl = x1 - x0;
+	double Vyl = y1 - y0;
+
+	double Vl = sqrt(pow(Vxl,2) + pow(Vyl,2));
+
+	double alfa = Vxl / Vl;
+
+	location->set_robotid(marker.id); //robotID
+	location->set_x(Xlm); //pozyajca w metrach
+	location->set_y(Ylm); //pozyajca w metrach
+	location->set_alfa(alfa); //kat w radianach
+	location->set_timestamp(999); //timestamp
+
+	cout << "ID: " << marker.id << " X: "  << Xlm << " Y: " << Ylm << " alfa: " << alfa << endl;
+
+}
+
 
 double ArucoLocation::distance(double x0,double y0,double x1,double y1)
 {
