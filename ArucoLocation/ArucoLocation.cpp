@@ -16,7 +16,7 @@ ArucoLocation:: ArucoLocation(string cameraParams,Size inputImageSize)
 	{
 		RobotLocation[i].set_robotid(i);
 
-		sIP = "192.168.2.100"; //"192.168.2.20" + to_string(i);
+		sIP = "192.168.2.201"; //"192.168.2.20" + to_string(i);
 
 		RobotClient[i] = new UdpClient(sIP.c_str(),port);
 	}
@@ -41,7 +41,9 @@ void ArucoLocation::run()
 
 	string output;
 	cv::namedWindow("in", 1);
-	//cv::namedWindow("thes", 1);
+	cv::namedWindow("thes", 1);
+
+	
 
 	while(working)
 	{
@@ -55,6 +57,9 @@ void ArucoLocation::run()
 
 			for (unsigned int i = 0; i < Markers.size(); i++) // for each marker, draw info and its boundaries in the image
 			{
+				if(Markers[i].id > ROBOTS_COUNT)
+					continue;
+				
 				currentLocation = RobotLocation[Markers[i].id];
 				curentRobotClient = RobotClient[Markers[i].id];
 
@@ -70,7 +75,7 @@ void ArucoLocation::run()
 			CvDrawingUtils::draw2dAxis(InImage,Xp,Yp); //narysuj osie Ox Oy
 
 			cv::imshow("in", InImage); // show input with augmented information       
-			//cv::imshow("thes", MDetector.getThresholdedImage());  // show also the internal image resulting from the threshold operation	  
+			cv::imshow("thes", MDetector.getThresholdedImage());  // show also the internal image resulting from the threshold operation	  
 			cv::waitKey(1); // wait for key to be pressed
 		}
 	}

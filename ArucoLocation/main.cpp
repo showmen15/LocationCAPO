@@ -128,6 +128,7 @@ int main(int argc, char **argv)
 
 		Mat frame;
 		namedWindow("frame",1);
+		cv::namedWindow("Output", cv::WINDOW_AUTOSIZE);
 
 		int zaczytane = 20;
 
@@ -135,7 +136,29 @@ int main(int argc, char **argv)
 		{
 			inputVideo >> frame; // get a new frame from camera
 
-			rec.Record(frame);
+			
+
+
+
+			/*
+			//Grayscale matrix
+    cv::Mat grayscaleMat (frame.size(), CV_8U);
+
+    //Convert BGR to Gray
+    cv::cvtColor( frame, grayscaleMat, CV_BGR2GRAY );
+
+    //Binary image
+    cv::Mat binaryMat(grayscaleMat.size(), grayscaleMat.type());
+
+    //Apply thresholding
+    cv::threshold(grayscaleMat, binaryMat, 100, 255, cv::THRESH_BINARY);
+
+    //Show the results
+    
+    cv::imshow("Output", binaryMat);
+	*/
+
+	rec.Record(frame);
 			location.Update(frame);	
 
 			imshow("frame", frame);
