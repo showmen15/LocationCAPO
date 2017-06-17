@@ -167,8 +167,8 @@ void ArucoLocation::set_location(Marker marker, Aruco::ArucoLocation* location)
 
 void ArucoLocation::set_location2(Marker marker, Aruco::ArucoLocation* location)
 {
-	double x0 = marker[0].x;
-	double y0 = marker[0].y;
+	double x0 = marker[2].x;
+	double y0 = marker[2].y;
 
 	double x1 = marker[1].x;
 	double y1 = marker[1].y;
@@ -186,7 +186,9 @@ void ArucoLocation::set_location2(Marker marker, Aruco::ArucoLocation* location)
 
 	double Vl = sqrt(pow(Vxl,2) + pow(Vyl,2));
 
-	double alfa = Vxl / Vl;
+	//double alfa = Vxl / Vl;
+
+	double alfa = atan2(Vyl,Vxl);
 
 	location->set_robotid(marker.id); //robotID
 	location->set_x(Xlm); //pozyajca w metrach
