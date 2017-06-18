@@ -120,7 +120,7 @@ int main(int argc, char **argv)
 		string sCameraParams =  ".\\out_camera_params.yml";
 
 		int CodecType = CV_FOURCC('M', 'J', 'P', 'G'); //CV_FOURCC('H', '2', '6', '3'); // Get Codec Type- Int form
-		double Fps = 17.0; //25.0
+		double Fps = 15; //25.0
 		Size InputSize = Size((int) inputVideo.get(CV_CAP_PROP_FRAME_WIDTH), (int) inputVideo.get(CV_CAP_PROP_FRAME_HEIGHT)); // Acquire input size
 
 		ArucoLocation location(sCameraParams,InputSize); //okiekt lokalizacji
@@ -128,18 +128,13 @@ int main(int argc, char **argv)
 
 		Mat frame;
 		namedWindow("frame",1);
-		cv::namedWindow("Output", cv::WINDOW_AUTOSIZE);
+		//cv::namedWindow("Output", cv::WINDOW_AUTOSIZE);
 
 		int zaczytane = 20;
 
 		for(;working;)
 		{
 			inputVideo >> frame; // get a new frame from camera
-
-			
-
-
-
 			/*
 			//Grayscale matrix
     cv::Mat grayscaleMat (frame.size(), CV_8U);
@@ -158,12 +153,12 @@ int main(int argc, char **argv)
     cv::imshow("Output", binaryMat);
 	*/
 
-	rec.Record(frame);
+			rec.Record(frame);
 			location.Update(frame);	
 
 			imshow("frame", frame);
 
-			key = waitKey(200);
+			key = waitKey(42);
 			if(key >= 0)
 			{
 				switch (key)
@@ -230,6 +225,12 @@ int main(int argc, char **argv)
 						break;
 					}
 
+					//F2
+				case 7405568: 
+					{
+					inputVideo.set(CV_CAP_PROP_SETTINGS, 1);
+					break;
+					}
 				default:
 					break;
 				}
