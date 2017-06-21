@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
+# Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArucoLib", "ArucoLib\ArucoLib.vcxproj", "{A3F6A927-EC09-4DE9-BDFC-64DCC4E39ABE}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Create_Marker", "Create_Marker\Create_Marker.vcxproj", "{E8D4C5CD-BD23-4C8C-9CE9-BB760B571378}"
@@ -62,6 +62,7 @@ Global
 		{8A69005A-36EC-4AEC-9A20-D44EEAD9717B}.Release|Win32.Build.0 = Release|Win32
 		{EAE6291D-2488-4616-8EE1-9E0E37E1E11D}.Debug|Win32.ActiveCfg = Debug|Win32
 		{EAE6291D-2488-4616-8EE1-9E0E37E1E11D}.Release|Win32.ActiveCfg = Release|Win32
+		{EAE6291D-2488-4616-8EE1-9E0E37E1E11D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

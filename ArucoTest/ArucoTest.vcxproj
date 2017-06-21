@@ -66,12 +66,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\ArUco2\aruco-1.3.0\aruco-1.3.0\utils\aruco_test.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ArucoLib\ArucoLib.vcxproj">
       <Project>{a3f6a927-ec09-4de9-bdfc-64dcc4e39abe}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="aruco_test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
